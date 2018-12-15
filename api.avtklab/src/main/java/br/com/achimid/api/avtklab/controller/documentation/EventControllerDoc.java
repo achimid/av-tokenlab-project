@@ -1,5 +1,6 @@
 package br.com.achimid.api.avtklab.controller.documentation;
 
+import br.com.achimid.api.avtklab.dto.EventDTO;
 import br.com.achimid.api.avtklab.model.Event;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpEntity;
@@ -15,10 +16,10 @@ public interface EventControllerDoc {
     HttpEntity<?> get(@PathVariable Integer id);
 
     @ApiOperation("Cria um evento")
-    HttpEntity<Event> create(@RequestBody Event event);
+    HttpEntity<Event> create(@RequestBody EventDTO event);
 
     @ApiOperation("Atualiza o evento")
-    HttpEntity<?> update(@RequestBody Event event);
+    HttpEntity<?> update(@RequestBody EventDTO event);
 
     @ApiOperation("Exlusão de um evento por id")
     HttpEntity<?> delete(@PathVariable Integer id);

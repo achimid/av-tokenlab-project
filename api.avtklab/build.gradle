@@ -31,11 +31,11 @@ dependencies {
 
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	runtimeOnly('com.h2database:h2')
-	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
 	compileOnly('org.projectlombok:lombok')
-	compileOnly('io.springfox:springfox-swagger2:2.4.0')
-	compileOnly('io.springfox:springfox-swagger-ui:2.4.0')
+
+	compile('io.springfox:springfox-swagger2:2.9.2')
+	compile('io.springfox:springfox-swagger-ui:2.9.2')
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.security:spring-security-test')

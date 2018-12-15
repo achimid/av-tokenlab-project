@@ -1,5 +1,6 @@
 package br.com.achimid.api.avtklab.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,10 +20,12 @@ public class Event extends BaseModel {
 
     @NotNull(message = "O campo startDate não pode ser null")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
     private Date startDate;
 
     @NotNull(message = "O campo endDate não pode ser null")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
     private Date endDate;
 
 }

@@ -1,11 +1,13 @@
 package br.com.achimid.api.avtklab.controller;
 
 import br.com.achimid.api.avtklab.controller.documentation.EventControllerDoc;
+import br.com.achimid.api.avtklab.dto.EventDTO;
 import br.com.achimid.api.avtklab.model.Event;
 import br.com.achimid.api.avtklab.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,13 +33,13 @@ public class EventController implements EventControllerDoc {
     }
 
     @PostMapping
-    public HttpEntity<Event> create(@RequestBody Event event) {
-        return ResponseEntity.ok(eventService.save(event));
+    public HttpEntity<Event> create(@Validated @RequestBody EventDTO event) {
+        return ResponseEntity.ok(eventService.save(event.getEvent()));
     }
 
     @PutMapping
-    public HttpEntity<?> update(@RequestBody Event event) {
-        return ResponseEntity.ok(eventService.save(event));
+    public HttpEntity<?> update(@Validated @RequestBody EventDTO event) {
+        return ResponseEntity.ok(eventService.save(event.getEvent()));
     }
 
     @DeleteMapping("/{id}")
