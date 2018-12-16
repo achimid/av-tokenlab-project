@@ -46,7 +46,7 @@
                             <div class="col-md-6 offset-md-3">
                                 <div class="card">
                                     <div class="card-body card-block">
-                                        <form action="" method="post" class="form-horizontal">
+                                        <form action="" method="post" class="form-horizontal" id="formEvent">
                                             <div class="row">
                                                 
                                             <div class="card-header">Dados do Evento</div>
@@ -68,8 +68,8 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="pull-right">
-                                                        <button class="btn btn-danger">Excluir</button>
-                                                        <button class="btn btn-primary">Salvar</button>
+                                                        <a id="btnDelete" class="btn btn-danger">Excluir</a>
+                                                        <button type="submit" class="btn btn-primary">Salvar</button>
                                                     </div>
                                                     <div class="pull-left">
                                                         <a href="./index.html" class="btn btn-secondary">Voltar</a>
@@ -114,6 +114,10 @@
     <!-- Main JS-->
     <script src="js/main.js"></script>
     <script src="js/event.js"></script>
+
+    <script>
+        findById();
+    </script>
 
 </body>
 

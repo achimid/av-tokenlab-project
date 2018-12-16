@@ -3358,6 +3358,7 @@ section {
 }
 
 .au-task {
+    min-height: 70px;
     color: #808080;
 }
 
