@@ -55,6 +55,8 @@ public class TestEventController {
         RestAssured.authentication = authScheme;
     }
 
+    // --------------- Authentication ---------------
+
     @Test
     public void testEventEndPoint_badAuth() {
         given().auth()
@@ -63,6 +65,10 @@ public class TestEventController {
                 .then()
                 .assertThat().statusCode(HttpStatus.UNAUTHORIZED.value());
     }
+
+    // -------------------------------------------------
+
+    // --------------- List All Envents ---------------
 
     @Test
     public void testEventEndPoint_ListAll_WithoutReturn() {
@@ -82,12 +88,26 @@ public class TestEventController {
         Assert.assertEquals(events.size(), eventsReturn.size()); // nada bom....
     }
 
+    // -------------------------------------------------
+
+    // --------------- Create Envents ---------------
+
     @Test
     public void testEventEndPoint_Create_EmptyEvent() {
         given()
                 .header("Accept", "application/json")
                 .contentType("application/json")
                 .body(new EventDTO())
+                .post("/api/v1/event")
+                .then()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Create_NullEvent() {
+        given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
                 .post("/api/v1/event")
                 .then()
                 .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
@@ -141,6 +161,120 @@ public class TestEventController {
                 .post("/api/v1/event")
                 .then()
                 .assertThat().statusCode(HttpStatus.OK.value());
+    }
+
+    // -------------------------------------------------------
+
+    // ----------------------- Update ------------------------
+
+    @Test
+    public void testEventEndPoint_Update_WithoutId() {
+        given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
+                .body(eventValid)
+                .put("/api/v1/event")
+                .then()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Update_EmptyEvent() {
+        given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
+                .body(new EventDTO())
+                .put("/api/v1/event")
+                .then()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Update_NullEvent() {
+        given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
+                .put("/api/v1/event")
+                .then()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Update_InvalidDescriptionEvent() {
+        eventValid = new EventDTO(eventService.save(eventValid.getEvent()));
+        eventValid.setDescription(null);
+
+        given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
+                .body(eventValid)
+                .put("/api/v1/event/" + eventValid.getId())
+                .then()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Update_InvalidStartDateEvent() {
+        eventValid = new EventDTO(eventService.save(eventValid.getEvent()));
+        eventValid.setStartDate(null);
+
+        given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
+                .body(eventValid)
+                .put("/api/v1/event/" + eventValid.getId())
+                .then()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Update_InvalidEndDateEvent() {
+        eventValid = new EventDTO(eventService.save(eventValid.getEvent()));
+        eventValid.setEndDate(null);
+
+        given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
+                .body(eventValid)
+                .put("/api/v1/event/" + eventValid.getId())
+                .then()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Update_Success() {
+        eventValid = new EventDTO(eventService.save(eventValid.getEvent()));
+
+        eventValid.setDescription("Updated");
+
+        Event retorno =
+                given()
+                .header("Accept", "application/json")
+                .contentType("application/json")
+                .body(eventValid)
+                .put("/api/v1/event/" + eventValid.getId())
+                .then()
+                .assertThat().statusCode(HttpStatus.OK.value())
+                .extract().as(Event.class);
+
+        Assert.assertEquals(eventValid.getDescription(), retorno.getDescription());
+        Assert.assertEquals(eventValid.getStartDate(), retorno.getStartDate());
+        Assert.assertEquals(eventValid.getEndDate(), retorno.getEndDate());
+        Assert.assertEquals(eventValid.getId(), retorno.getId());
+    }
+
+    // -------------------------------------------------------
+
+
+
+    @Test
+    public void testEventEndPoint_Find_InvalidId() {
+
+    }
+
+    @Test
+    public void testEventEndPoint_Find_ValidId() {
+
     }
 
 

@@ -45,6 +45,7 @@ public class EventController implements EventControllerDoc {
 
     @PutMapping
     public HttpEntity<?> update(@Validated @RequestBody EventDTO event) {
+        if(event.getId() == null) return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(eventService.save(event.getEvent()));
     }
 
