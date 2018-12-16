@@ -1,4 +1,4 @@
-package br.com.achimid.api.avtklab.controller;
+package br.com.achimid.api.avtklab.integracao.controller;
 
 
 import br.com.achimid.api.avtklab.dto.EventDTO;
@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.restassured.RestAssured.delete;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
@@ -208,7 +209,7 @@ public class TestEventController {
                 .header("Accept", "application/json")
                 .contentType("application/json")
                 .body(eventValid)
-                .put("/api/v1/event/" + eventValid.getId())
+                .put("/api/v1/event")
                 .then()
                 .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
     }
@@ -222,7 +223,7 @@ public class TestEventController {
                 .header("Accept", "application/json")
                 .contentType("application/json")
                 .body(eventValid)
-                .put("/api/v1/event/" + eventValid.getId())
+                .put("/api/v1/event")
                 .then()
                 .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
     }
@@ -236,7 +237,7 @@ public class TestEventController {
                 .header("Accept", "application/json")
                 .contentType("application/json")
                 .body(eventValid)
-                .put("/api/v1/event/" + eventValid.getId())
+                .put("/api/v1/event")
                 .then()
                 .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
     }
@@ -249,33 +250,69 @@ public class TestEventController {
 
         Event retorno =
                 given()
-                .header("Accept", "application/json")
-                .contentType("application/json")
-                .body(eventValid)
-                .put("/api/v1/event/" + eventValid.getId())
-                .then()
-                .assertThat().statusCode(HttpStatus.OK.value())
-                .extract().as(Event.class);
+                        .header("Accept", "application/json")
+                        .contentType("application/json")
+                        .body(eventValid)
+                        .put("/api/v1/event")
+                        .then()
+                        .assertThat().statusCode(HttpStatus.OK.value())
+                        .extract().as(Event.class);
 
         Assert.assertEquals(eventValid.getDescription(), retorno.getDescription());
-        Assert.assertEquals(eventValid.getStartDate(), retorno.getStartDate());
-        Assert.assertEquals(eventValid.getEndDate(), retorno.getEndDate());
+        Assert.assertEquals("Updated", retorno.getDescription());
         Assert.assertEquals(eventValid.getId(), retorno.getId());
     }
 
     // -------------------------------------------------------
 
-
+    // ---------------------- Find by Id  ---------------------------
 
     @Test
     public void testEventEndPoint_Find_InvalidId() {
-
+        get("/api/v1/event/1")
+                .then()
+                .assertThat().statusCode(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
-    public void testEventEndPoint_Find_ValidId() {
+    public void testEventEndPoint_Find_Success() {
+        eventValid = new EventDTO(eventService.save(eventValid.getEvent()));
 
+        Event retorno =
+                get("/api/v1/event/" + eventValid.getId())
+                        .then()
+                        .assertThat().statusCode(HttpStatus.OK.value())
+                        .extract().as(Event.class);
+
+        Assert.assertEquals(eventValid.getDescription(), retorno.getDescription());
+        Assert.assertEquals(eventValid.getId(), retorno.getId());
     }
+
+    // -------------------------------------------------------
+
+    // ---------------------- Delete  ---------------------------
+
+    @Test
+    public void testEventEndPoint_Delete_InvalidId() {
+        delete("/api/v1/event/1")
+                .then()
+                .assertThat().statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void testEventEndPoint_Delete_Success() {
+        eventValid = new EventDTO(eventService.save(eventValid.getEvent()));
+
+        delete("/api/v1/event/" + eventValid.getId())
+                        .then()
+                        .assertThat().statusCode(HttpStatus.OK.value());
+
+        boolean exists = eventService.exists(eventValid.getId());
+
+        Assert.assertEquals(false, exists);
+    }
+
+    // -------------------------------------------------------
 
 
 }
