@@ -25,6 +25,7 @@
     <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
     <link href="vendor/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" media="all">
     <link href="vendor/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet" media="all">
+    <link href="vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="all">
     
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
@@ -55,14 +56,14 @@
                                                         <input type="text" name="event.description" placeholder="Descrição" class="form-control" required="true">                                                        
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-sm-6">
                                                     <div class="input-group">
-                                                        <input type="text" name="event.startDate" placeholder="Data Inicial" class="form-control datepicker" required="true">                                                        
+                                                        <input type="text" name="event.startDate" placeholder="Data Inicial" class="form-control datetime" required="true" readonly>                                                        
                                                     </div>
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-sm-6">
                                                     <div class="input-group">
-                                                        <input type="text" name="event.endDate" placeholder="Data Final" class="form-control datepicker" required="true">                                                        
+                                                        <input type="text" name="event.endDate" placeholder="Data Final" class="form-control datetime" required="true" readonly>                                                        
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -99,6 +100,7 @@
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
     <script src="vendor/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="vendor/jquery-cookie/jquery.cookie.js"></script>
 
     <!-- Bootstrap JS-->
     <script src="vendor/bootstrap-4.1/popper.min.js"></script>
@@ -106,9 +108,11 @@
 
     <!-- Vendor JS       -->
     <script src="vendor/animsition/animsition.min.js"></script>
+    <script src="vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="js/event.js"></script>
 
 </body>
 

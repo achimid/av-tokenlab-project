@@ -2,6 +2,7 @@ package br.com.achimid.api.avtklab.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper=false)
 public class Event extends BaseModel {
 
     @Id

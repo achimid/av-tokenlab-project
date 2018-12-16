@@ -86,11 +86,21 @@
 
 
 $(function() {
-  $('.datepicker').datepicker({
-    todayBtn: "linked",
-    locale: 'pt-br',
-    autoclose: true,
-    todayHighlight: true,
-    dateFormat: 'dd/mm/yy' 
-  });  
+  $(".datetime").datetimepicker({format: 'dd-mm-yyyy hh:ii'});
+
+  $('#loginForm').submit(function(e){
+    e.preventDefault();
+    if(!authenticate()){
+      $('.js-msg-login').text('Credênciais inválidas');
+      $('.js-msg-login').removeClass('hidden');
+    }else{
+      window.location.href = "./index.html";
+    }
+  });
+  
+});
+
+
+$(function() {
+    if(!isAuthenticated() && window.location.href.indexOf('/login.html') < 0) window.location.href = './login.html';
 });

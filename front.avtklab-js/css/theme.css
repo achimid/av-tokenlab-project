@@ -3384,11 +3384,6 @@ section {
     font-size: 14px;
 }
 
-.au-task-list {
-    height: 424px;
-    position: relative;
-    /*overflow-y: auto;*/
-}
 
 .au-task__item {
     border-bottom: 1px solid #f2f2f2;
