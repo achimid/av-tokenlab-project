@@ -43,7 +43,6 @@ function listAll(){
 }
 
 function addEventItem(item){
-    debugger;
     let divItem =
     `<div class="col-md-12 au-task__item au-task__item--warning">
         <div class="au-task__item-inner">
