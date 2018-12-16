@@ -2,6 +2,7 @@ package br.com.achimid.api.avtklab.controller;
 
 
 import io.restassured.RestAssured;
+import io.restassured.authentication.PreemptiveBasicAuthScheme;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,15 +30,28 @@ public class TestEventController {
     public void setup() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = port;
-        RestAssured.basic("admin","admin");
+        PreemptiveBasicAuthScheme authScheme = new PreemptiveBasicAuthScheme();
+        authScheme.setUserName("admin");
+        authScheme.setPassword("admin");
+        RestAssured.authentication = authScheme;
     }
 
     @Test
-    public void testeEmpresaEndPointWithoutReturn() {
-        get("/api/v1/event")
+    public void testEventEndPoint_badAuth() {
+        given().auth()
+                .preemptive().basic("", "")
+                .when().get("/api/v1/event")
                 .then()
-                .assertThat().statusCode(HttpStatus.OK.value())
-                .assertThat().body(containsString("[]"));
+                .assertThat().statusCode(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    @Test
+    public void testEventEndPointWithoutReturn() {
+        //given().auth().preemptive().basic(username, password).when().
+        get("/api/v1/event")
+            .then()
+            .assertThat().statusCode(HttpStatus.OK.value())
+            .assertThat().body(containsString("[]"));
     }
 
 }
