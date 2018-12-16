@@ -17,10 +17,13 @@ import java.util.Date;
 public class EventDTO{
 
     private Integer id;
+    @NotNull(message = "O campo description não pode ser null")
     private String description;
     @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
+    @NotNull(message = "O campo startDate não pode ser null")
     private Date startDate;
     @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
+    @NotNull(message = "O campo endDate não pode ser null")
     private Date endDate;
 
     public EventDTO(){
